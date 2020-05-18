@@ -25,6 +25,12 @@ if [ -e ${DIVERT_DIR}/${f} ]; then
 	dpkg-divert --remove ${f}
 	rm -f ${f}
 	mv -f ${DIVERT_DIR}/${f} ${f}
+	(
+		local_dir=$(dirname $f)
+		local_dir=${local_dir#/}
+		cd $DIVERT_DIR
+		rmdir --parents --ignore-fail-on-non-empty $local_dir
+	)
 fi
 
 pam-auth-update --package
