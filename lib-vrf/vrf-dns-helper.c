@@ -35,6 +35,7 @@
 #include <netlink/route/link/vrf.h>
 
 #define RESOLVCONF	"/etc/resolv.conf"
+#define IIF_LOOPBACK	"lo"
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(*(x)))
 
@@ -102,6 +103,7 @@ static struct rtnl_rule *create_rule(struct nl_addr *addr, uint32_t table)
 		rtnl_rule_set_table(rule, table);
 		rtnl_rule_set_action(rule, RTN_UNICAST);
 		rtnl_rule_set_dst(rule, addr);
+		rtnl_rule_set_iif(rule, IIF_LOOPBACK);
 	}
 
 	return rule;
@@ -518,3 +520,4 @@ out:
 
 	return rc;
 }
+

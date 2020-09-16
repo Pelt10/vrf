@@ -16,6 +16,6 @@ Description: Linux tools for VRF
 
 Package: mgmt-vrf
 Architecture: all
-Depends: vrf, python, libpam-script, ${misc:Depends}
+Depends: vrf, python, python-pyinotify, libpam-script, ${misc:Depends}
 Description: Linux tools and config for Management VRF
  This package provides tools for using the Management VRF configuration.

@@ -51,7 +51,7 @@ class DNSWatcherActions():
                 if not line: continue
                 l = line.split()
                 mutex.acquire(1)
-                _nameservers.append({'ip': l[4], 'prio': l[0][:-1], 'vrf': l[6]})
+                _nameservers.append({'ip': l[4], 'prio': l[0][:-1], 'vrf': l[8]})
                 mutex.release()
         except subprocess.CalledProcessError as e:
             log.warning(str(e))
@@ -136,7 +136,7 @@ class DNSWatcherActions():
     def modify_rules(action, rules, callback):
         for r in rules:
             try:
-                cmd = 'ip rule %s prio %s to %s' % (action, r['prio'], r['ip'])
+                cmd = 'ip rule %s prio %s to %s iif lo' % (action, r['prio'], r['ip'])
                 if r['vrf']:
                     cmd = '%s table %s' % (cmd, r['vrf'])
                 log.info('executing: %s' % cmd)
